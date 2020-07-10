@@ -61,6 +61,15 @@ font-family: 'Roboto Slab', serif;
   opacity: 0;
 }
 
+/*
+.bill-container {
+  position: absolute;
+  background-color: red;
+  min-height: 220px;
+  z-index: 100;
+}
+*/
+
 .change-box {
   border: 3px solid rgb(100, 100, 100);
   background-color: rgb(200, 200, 200);
@@ -68,6 +77,10 @@ font-family: 'Roboto Slab', serif;
   box-sizing: border-box;
 }
 
+.money img {
+  max-width: 200px;
+  cursor: pointer;
+}
 
 
 
