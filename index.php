@@ -53,6 +53,7 @@
                  </div>
                 </div>
               <div class="atm">
+                <div class="cash-container"></div>
                 <div class="bill-container"></div>
                 <img src="img/bill_acc.png" alt="">
               </div>

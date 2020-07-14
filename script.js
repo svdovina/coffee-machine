@@ -142,10 +142,21 @@ function takeMoney(event) {
   bill.onmouseup = function() {
     window.onmousemove = null;
     if ( inAtm(bill) ) {
-    console.log( bill.getAttribute("data-cost") );
-    console.log( bill.dataset.cost );
-    balance.value = +balance.value + +bill.dataset.cost;
-    bill.remove(); //Удаляем элемент
+      let cashContainer = document.querySelector(".cash-container");
+      bill.style.position = "";
+      bill.style.transform = "rotate(90deg) translateX(25%)";
+      cashContainer.append(bill); // Присоеденить в конце элемента
+      bill.style.transition = "transform 1.5s";
+      setTimeout(() => {
+        bill.style.transform = "rotate(90deg) translateX(-75%)";
+        bill.ontransitionend = () => {
+          balance.value = +balance.value + +bill.dataset.cost;
+          bill.remove();
+        };
+      }, 10);
+
+    // console.log( bill.getAttribute("data-cost") );
+    // console.log( bill.dataset.cost );
     }
   };
 }
@@ -181,7 +192,80 @@ function inAtm(bill) {
 
 }
 
+//Получение сдачи, создание элементов с использованием JavaScript
+let changeButton = document.querySelector(".change-button");
+changeButton.onclick = takeChange;
 
+function takeChange() { //рекурсивная функция - функция, которая вызывает саму себя, пока выполняются условия
+  if (+balance.value >= 10) {
+    createCoin("10");
+    balance.value -= 10;
+    return setTimeout(takeChange, 300);
+  } else if (+balance.value >=5) {
+    createCoin("5");
+    balance.value -= 5;
+    return setTimeout(takeChange, 300);
+  } else if (+balance.value >=2) {
+    createCoin("2");
+    balance.value -= 2;
+    return setTimeout(takeChange, 300);
+  } else if (+balance.value >=1) {
+    createCoin("1");
+    balance.value -= 1;
+    return setTimeout(takeChange, 300);
+  }
+}
+
+function createCoin(cost) { 
+  let coinSrc = "";
+  switch (cost) {
+    case "10":
+      coinSrc = "img/10rub.png";
+      break;
+    case "5":
+      coinSrc = "img/5rub.png";
+      break;
+    case "2":
+      coinSrc = "img/2rub.png";
+      break;
+    case "1":
+      coinSrc = "img/1rub.png";
+      break;
+      default:
+      console.error("Такой монеты не существует");
+  }
+  let changeBox = document.querySelector(".change-box");
+  let changeBoxWidth = changeBox.getBoundingClientRect().width;
+  let changeBoxHeight = changeBox.getBoundingClientRect().height;
+  let coin = document.createElement("img");
+  coin.setAttribute("src", coinSrc);
+  coin.style.width = "50px";
+  coin.style.cursor = "pointer";
+  coin.style.position = "absolute";
+  coin.style.top = Math.floor(Math.random() * (changeBoxHeight - 60)) + "px";
+  coin.style.left = Math.floor(Math.random() * (changeBoxWidth - 60)) + "px";
+  changeBox.append(coin); //Добавляет элемент в конец родительского
+  //changeBox.prepend(coin); //Добавляет элемент в начало родительского
+  // changeBox.before(coin); //Добавляет элемент после родительского
+  // changeBox.after(coin); //Добавляет элемент до родительского
+  // changeBox.replaceWith(coin); //Добавляет элемент вместо родительского
+  coin.style.transition = "transform .5s, opacity .5s";
+  coin.style.transform = "translateY(-20%)";
+  coin.style.opacity = 0;
+  setTimeout(() => {
+    coin.style.transform = "translateY(0%)";
+    coin.style.opacity = 1;
+  }, 10);
+  
+  coin.onclick = () => {
+    coin.style.transform = "translateY(-20%)";
+    coin.style.poacity = 0;
+    coin.ontransitionend = () => {
+      coin.remove();
+    };
+  };
+  
+}
 
 
 

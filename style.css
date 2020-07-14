@@ -61,28 +61,37 @@ font-family: 'Roboto Slab', serif;
   opacity: 0;
 }
 
-/*
-.bill-container {
-  position: absolute;
-  background-color: red;
-  min-height: 220px;
-  z-index: 100;
-}
-*/
-
 .change-box {
   border: 3px solid rgb(100, 100, 100);
   background-color: rgb(200, 200, 200);
   min-height: 100px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .money img {
   max-width: 200px;
   cursor: pointer;
+  z-index: 1000;
 }
 
+.cash-container {
+  position: absolute;
+/*  background-color: red;*/
+  width: 70%;
+  height: 60%;
+  margin: 15% 10%;
+  overflow: hidden;
+}
 
+.atm {
+  position: relative;
+  z-index: 10;
+}
+
+.change-box, .change-box {
+  z-index: 100;
+}
 
 
 
